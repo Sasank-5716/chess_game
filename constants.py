@@ -1,0 +1,5 @@
+WIDTH = HEIGHT = 800
+SQ_SIZE = 100
+ROWS = COLS = 8
+COLORS = {"light": (240, 217, 181), "dark": (181, 136, 99)}
+PIECE_IMAGES = {}
