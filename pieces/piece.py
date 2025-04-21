@@ -5,4 +5,9 @@ class Piece:
         self.image = None
         self.has_moved = False
         
+    def get_legal_moves(self, board):
+        raise NotImplementedError
+        
+    def attacks(self, board, pos):
+        return pos in self.get_legal_moves(board)
     
