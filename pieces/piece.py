@@ -1,14 +1,8 @@
 class Piece:
-    def __init__(self, color, row, col):
+    def __init__(self, color, pos):
         self.color = color
-        self.row = row
-        self.col = col
-        self.moved = False
+        self.pos = pos
+        self.image = None
+        self.has_moved = False
         
-    def get_valid_moves(self, board):
-        raise NotImplementedError
-        
-    def move(self, row, col):
-        self.row = row
-        self.col = col
-        self.moved = True
+    
