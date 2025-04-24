@@ -28,3 +28,46 @@ piece_images = {
     }
 }
 
+def main():
+    game_state = GameState()
+    ai = ChessAI('black', difficulty=3)
+    mode = 'pvp'  # or 'pvc'
+    selected = None
+    legal_moves = []
+    
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                return
+                
+            # Handle input
+            if mode == 'pvp' or game_state.turn == 'white':
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    x, y = event.pos
+                    col = x // SQUARE_SIZE
+                    row = y // SQUARE_SIZE
+                    
+                    if selected:
+                        if (row,col) in legal_moves:
+                            # Make move
+                            game_state.make_move(selected, (row,col))
+                            sound.play_move()
+                            selected = None
+                            legal_moves = []
+                        else:
+                            selected = None
+                            legal_moves = []
+                    else:
+                        piece = game_state.board[row][col]
+                        if piece and piece.color == game_state.turn:
+                            selected = (row,col)
+                            legal_moves = [m for m in piece.get_legal_moves(game_state.board) 
+                                         if is_valid_move(game_state, selected, m)]
+        
+        # AI move
+        if mode == 'pvc' and game_state.turn == 'black' and not game_state.checkmate:
+            move = ai.get_best_move(game_state)
+            if move:
+                game_state.make_move(move[0], move[1])
+                sound.play_move()
