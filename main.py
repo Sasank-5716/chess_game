@@ -71,3 +71,19 @@ def main():
             if move:
                 game_state.make_move(move[0], move[1])
                 sound.play_move()
+
+        screen.fill((0,0,0))
+        draw_board(screen)
+        if selected:
+            draw_highlights(screen, legal_moves)
+        draw_pieces(screen, game_state.board, piece_images)
+        show_credits(screen)
+        
+        if game_state.checkmate:
+            draw_game_over(screen)
+        
+        pygame.display.flip()
+        clock.tick(FPS)
+
+if __name__ == "__main__":
+    main()
