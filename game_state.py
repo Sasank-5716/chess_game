@@ -43,6 +43,15 @@ class GameState:
     if isinstance(piece, Pawn) and abs(start_row - end_row) == 2:
         self.en_passant_target = (end_row + (1 if piece.color == WHITE else -1), end_col)
 
+    # Handle pawn promotion
+    if isinstance(piece, Pawn) and end_row in [0, 7]:
+        piece = Queen(piece.color, (end_row, end_col))
+
+    # Update board state
+    self.board[start_row][start_col] = None
+    self.board[end_row][end_col] = piece
+    piece.pos = (end_row, end_col)
+    piece.has_moved = True
 
     def in_check(self):
         king_pos = None
