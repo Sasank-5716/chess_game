@@ -33,6 +33,11 @@ class GameState:
             self.board[start_row][0] = None
             rook.pos = (start_row, 3)
 
+    # Handle en passant
+    if isinstance(piece, Pawn) and end == self.en_passant_target:
+        captured_pawn_row = end_row + 1 if piece.color == WHITE else end_row - 1
+        self.board[captured_pawn_row][end_col] = None
+
     def in_check(self):
         king_pos = None
         # Find king
