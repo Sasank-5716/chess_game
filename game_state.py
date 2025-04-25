@@ -1,5 +1,6 @@
 from board import create_start_board
 from constants import WHITE, BLACK
+from pieces import King, Queen, Rook, Bishop, Knight, Pawn
 
 class GameState:
     def __init__(self):
@@ -10,7 +11,13 @@ class GameState:
         self.move_history = []
         self.checkmate = False
         self.stalemate = False
-        
+    
+    def make_move(self, start, end):
+        start_row, start_col = start
+        end_row, end_col = end
+        piece = self.board[start_row][start_col]
+        captured = self.board[end_row][end_col]
+
     def in_check(self):
         king_pos = None
         # Find king
