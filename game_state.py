@@ -18,6 +18,21 @@ class GameState:
         piece = self.board[start_row][start_col]
         captured = self.board[end_row][end_col]
 
+    # Handle castling
+    if isinstance(piece, King) and abs(start_col - end_col) == 2:
+        # Kingside
+        if end_col == 6:
+            rook = self.board[start_row][7]
+            self.board[start_row][5] = rook
+            self.board[start_row][7] = None
+            rook.pos = (start_row, 5)
+        # Queenside
+        else:
+            rook = self.board[start_row][0]
+            self.board[start_row][3] = rook
+            self.board[start_row][0] = None
+            rook.pos = (start_row, 3)
+
     def in_check(self):
         king_pos = None
         # Find king
