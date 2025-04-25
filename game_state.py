@@ -53,6 +53,11 @@ class GameState:
     piece.pos = (end_row, end_col)
     piece.has_moved = True
 
+     # Switch turns
+    self.turn = BLACK if self.turn == WHITE else WHITE
+    self.move_history.append((start, end))
+    self.check_game_over()
+
     def in_check(self):
         king_pos = None
         # Find king
