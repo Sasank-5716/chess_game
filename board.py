@@ -1,5 +1,11 @@
 from constants import *
-from pieces import Pawn, Rook, Knight, Bishop, Queen, King
+from pieces.pawn import Pawn
+from pieces.rook import Rook
+from pieces.knight import Knight
+from pieces.bishop import Bishop
+from pieces.queen import Queen
+from pieces.king import King
+
 
 def create_start_board():
     board = [[None for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)]
