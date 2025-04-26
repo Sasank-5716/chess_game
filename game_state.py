@@ -11,7 +11,8 @@ class GameState:
         self.move_history = []
         self.checkmate = False
         self.stalemate = False
-    
+        self.en_passant_target = None
+
     def make_move(self, start, end):
         start_row, start_col = start
         end_row, end_col = end
@@ -45,7 +46,7 @@ class GameState:
 
     # Handle pawn promotion
     if isinstance(piece, Pawn) and end_row in [0, 7]:
-        piece = Queen(piece.color, (end_row, end_col))
+       piece = Queen(piece.color, (end_row, end_col))
 
     # Update board state
     self.board[start_row][start_col] = None
@@ -87,6 +88,18 @@ class GameState:
                     for move in piece.get_legal_moves(self.board):
                         moves.append(((r,c), move))
         return moves
+    def is_valid_move(self, start, end):
+        # Create deep copy of game state for validation
+        temp_board = [row.copy() for row in self.board]
+        temp_piece = temp_board[start[0]][start[1]]
+        
+        # Simulate move
+        temp_board[end[0]][end[1]] = temp_piece
+        temp_board[start[0]][start[1]] = None
+        temp_piece.pos = end
+        
+        # Check if move leaves king in check
+        return not self.in_check(temp_board)
     
     def check_game_over(self):
         moves = self.get_all_legal_moves(self.turn)
